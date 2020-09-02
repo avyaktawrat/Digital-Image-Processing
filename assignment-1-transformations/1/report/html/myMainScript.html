@@ -1,0 +1,313 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question1 : Image Resize and Rotation</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-08-31"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question1 : Image Resize and Rotation</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">myShrinkImageByFactorD</a></li><li><a href="#5">myBilinearInterpolation</a></li><li><a href="#9">myNearestNeighborInterpolation</a></li><li><a href="#13">myBicubicInterpolation</a></li><li><a href="#17">Analyse all the enlargements</a></li><li><a href="#21">myImageRotation</a></li></ul></div><h2 id="1">myShrinkImageByFactorD</h2>
+    <p>We aim to demonstrate the Moire Effect in this case by undersampling the original image by 2 and 3 times. 
+    The expected result is that the Moire Effect would appear more pronounced when undersampled by 3 times when compared to 2x.</p>
+ 
+</pre><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_02.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_03.png" alt=""> <p>Every alternate pixel has been selected in the middle image and every third pixel has been selected in the right image. Moire Effect is evident here and as d = 3 has a higher level of undersampling, the effect is better observed there</p>
+    <h2 id="5">myBilinearInterpolation</h2><p>We enlarge the image in this case by using the Simple Bilinear Interpolation technique, wherein we've specifically given inputs to our function such that an image of size [m,n] is enlarged into an image of size [3m-2,2n-1]</p>
+ 
+ 
+</pre><img vspace="5" hspace="5" src="myMainScript_04.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_05.png" alt=""> <p>We've implemented Bilinear interpolation by reading 2x2 squares across the image matrix and interpolating the values for pixels midway and storing the new 4x3 rectangles obtained in this case in a new matrix. The computation in this case is quite straightforward, with the pixel value midway being a convex combination of pixel values at the edges of the unit square.The height has been roughly increased to 3x and width to 2x.</p><h2 id="9">myNearestNeighborInterpolation</h2><p>We enlarge the image in this case by using the Nearest Neighbor interpolation technique, wherein we've specifically given inputs to our function such that an image of size [m,n] is enlarged into an image of size [3m-2,2n-1]</p>
+
+</pre><img vspace="5" hspace="5" src="myMainScript_06.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_07.png" alt=""> <p>We've implemented Nearest Neighbor interpolation by reading 2x2 squares across the image matrix and interpolating the values for pixels midway and storing the new 4x3 rectangle obtained in this case in a new matrix. The height has been roughly increased to 3x and width to 2x</p><h2 id="13">myBicubicInterpolation</h2><p>We enlarge the image in this case by using the Bicubic Interpolation technique, wherein we've specifically given inputs to our function such that an image of size [m,n] is enlarged into an image of size [3m-2,2n-1]</p>
+ 
+</pre><img vspace="5" hspace="5" src="myMainScript_08.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_09.png" alt=""> <p>We've implemented Bicubic interpolation by reading 2x2 squares across the image matrix and interpolating the values for pixels midway and storing the new 4x3 rectangle obtained in this case in a new matrix. For each unit square, a bicubic in x,y is fitted to the square using derivative formulas as given in the slides. The 16 equations were solved to obtain 16 coefficients using simple matrix multiplications to give us the bicubic equation for each unit square. The image was padded on all 4 sides with the edge data being repeated. The height has been roughly increased to 3x and width to 2x</p>
+    <h2 id="17">Analyse all the enlargements</h2><p>We will analyse the results of the 3 methods obtained above using the jet colormap to compare the performance of all the methods</p>
+
+</pre><img vspace="5" hspace="5" src="myMainScript_10.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_11.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_12.png" alt="">
+    <p>Bicubic gives the best that is the smoothest results compared to bilinear interpolation, as a polynomial function is much smoother than a linear function. Also, nearest neighbor gives the worst results as expected, as it doesn't predict new values midway, it just replicates values hence gives rougher edges thus a bad picture quality.</p>
+    <h2 id="21">myImageRotation</h2><p>We will rotate the image clockwise by 30 degrees in this part</p>
+ 
+</pre><img vspace="5" hspace="5" src="myMainScript_13.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_14.png" alt=""> <p>The image has been rotated in the clockwise direction by rotating the pixels of the final image anti clockwise by 30 degrees and finding the value there using bilinear interpolation. One could interpret this as basically rotating the entire grid anticlockwise by 30 degrees</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question1 : Image Resize and Rotation
+
+%% myShrinkImageByFactorD
+%%
+% We aim to demonstrate the Moire Effect in this case by undersampling the
+% original image by 2 and 3 times
+%% 
+circ_conc = imread('../data/circles_concentric.png');
+ d_2 = myShrinkImageByFactorD(circ_conc,2);
+ d_3 = myShrinkImageByFactorD(circ_conc,3);
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(circ_conc);
+title("Original Image"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.1, 0.01,0,0];
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(d_2);
+title("Subsampled Image with d = 2"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.2, 0.01,0,0];
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(d_3);
+title("Subsampled Image with d = 3"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.3, 0.01,0,0];
+%%
+% Every alternate pixel has been selected in the middle image and every
+% third pixel has been selected in the right image. Moire Effect is evident
+% here and as d = 3 has a higher level of undersampling, the effect is
+% better observed there
+%% myBilinearInterpolation
+%%
+% We enlarge the image in this case by using a simple bilinear
+% interpolation technique, wherein we've specifically given inputs to our
+% function such that an image of size [m,n] is enlarged into an image of
+% size [3m-2,2n-1]
+%%
+barbara_small = imread('../data/barbaraSmall.png');
+ bilinear = myBilinearInterpolation(barbara_small,2,1);%2 new pixels to be added between 2 rows and 1 new pixel to be added between 2 columns
+ figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(barbara_small);
+title("Original Image"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.1, 0.01,0,0];
+figure;
+myNumOfColors = 100000;
+ myColorScale = [ [0:1/(myNumOfColors-1):1]' ,[0:1/(myNumOfColors-1):1]' , [0:1/(myNumOfColors-1):1]' ];
+ imagesc (single (bilinear)); % phantom is a popular test image
+ title('Bilinear Interpolation Result'); h =gca; h.Visible = 'on';
+ colormap (myColorScale);
+ colormap gray;
+ daspect ([1 1 1]);
+ axis tight;
+ colorbar
+cb.Position = cb.Position + [0.2, 0.01,0,0];
+%%
+% We've implemented Bilinear interpolation by reading 2x2 squares across
+% the image matrix and interpolating the values for pixels midway and
+% storing the new 4x3 rectangle obtained in this case in a new matrix. The
+% height has been roughly increased to 3x and width to 2x
+ %% myNearestNeighborInterpolation
+ %%
+% We enlarge the image in this case by using the Nearest Neighbor interpolation technique, wherein we've specifically given inputs to our
+% function such that an image of size [m,n] is enlarged into an image of
+% size [3m-2,2n-1]
+%%
+nearestneighbor = myNearestNeighbor(barbara_small,(2+1),(1+1));
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(barbara_small);
+title("Original Image"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.1, 0.01,0,0];
+figure;
+myNumOfColors = 100000;
+ myColorScale = [ [0:1/(myNumOfColors-1):1]' ,[0:1/(myNumOfColors-1):1]' , [0:1/(myNumOfColors-1):1]' ];
+ imagesc (single (nearestneighbor)); % phantom is a popular test image
+ title('Nearest Neighbor Interpolation Result'); h =gca; h.Visible = 'on';
+ colormap (myColorScale);
+ colormap gray;
+ daspect ([1 1 1]);
+ axis tight;
+ colorbar
+cb.Position = cb.Position + [0.2, 0.01,0,0];
+%%
+% We've implemented Nearest Neighbor interpolation by reading 2x2 squares across
+% the image matrix and interpolating the values for pixels midway and
+% storing the new 4x3 rectangle obtained in this case in a new matrix. The
+% height has been roughly increased to 3x and width to 2x
+%% myBicubicInterpolation
+%%
+% We enlarge the image in this case by using the Bicubic Interpolation technique, wherein we've specifically given inputs to our
+% function such that an image of size [m,n] is enlarged into an image of
+% size [3m-2,2n-1]
+%%
+ bicubic = myBicubicInterpolation(barbara_small,2,1);
+ figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(barbara_small);
+title("Original Image"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.1, 0.01,0,0];
+figure;
+myNumOfColors = 100000;
+ myColorScale = [ [0:1/(myNumOfColors-1):1]' ,[0:1/(myNumOfColors-1):1]' , [0:1/(myNumOfColors-1):1]' ];
+ imagesc (single (bicubic)); % phantom is a popular test image
+ title('Bicubic Interpolation Result'); h =gca; h.Visible = 'on';
+ colormap (myColorScale);
+ colormap gray;
+ daspect ([1 1 1]);
+ axis tight;
+ colorbar
+cb.Position = cb.Position + [0.2, 0.01,0,0];
+
+%%
+% We've implemented Bicubic interpolation by reading 2x2 squares across
+% the image matrix and interpolating the values for pixels midway and
+% storing the new 4x3 rectangle obtained in this case in a new matrix. The
+% height has been roughly increased to 3x and width to 2x
+%% Analyse all the enlargements
+%%
+% We will analyse the results of the 3 methods obtained above using the jet
+% colormap to compare the methods
+
+%%
+[m,n] = size(barbara_small);
+bilinear_crop = bilinear(1:floor(m),1:floor(n));
+nearestneighbor_crop = nearestneighbor(1:floor(m),1:floor(n));
+bicubic_crop = bicubic(1:floor(m),1:floor(n));
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imagesc(bilinear_crop);
+title("Bilinear"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.1, 0.01,0,0];
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imagesc(nearestneighbor_crop);
+title("Nearest Neighbor"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.2, 0.01,0,0];
+figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imagesc(bicubic_crop);
+title("Bicubic"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.3, 0.01,0,0];
+%%
+% Bicubic gives the best that is the smoothest results compared to bilinear
+% interpolation. Also, nearest neighbor gives the worst results as expected
+%% myImageRotation
+%%
+% We will rotate the image clockwise by 30 degrees in this part
+%%
+imrotated = myImageRotation(barbara_small, pi/6);
+ figure;
+myNumOfColors = 1000000;
+myColorScale = [ [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]', [0:1/(myNumOfColors-1):1]' ]; 
+colormap (myColorScale);
+colormap gray;axis tight;
+daspect ([1 1 1]);
+imshow(barbara_small);
+title("Original Image"); h = gca; h.Visible = 'on';
+cb=colorbar;
+cb.Position = cb.Position + [0.1, 0.01,0,0];
+figure;
+myNumOfColors = 100000;
+ myColorScale = [ [0:1/(myNumOfColors-1):1]' ,[0:1/(myNumOfColors-1):1]' , [0:1/(myNumOfColors-1):1]' ];
+ imagesc (single (imrotated)); % phantom is a popular test image
+ title('Rotation Result'); h =gca; h.Visible = 'on';
+ colormap (myColorScale);
+ colormap gray;
+ daspect ([1 1 1]);
+ axis tight;
+ colorbar
+cb.Position = cb.Position + [0.2, 0.01,0,0];
+%%
+% The image has been rotated in the clockwise direction by rotating the
+% pixels of the final image anti clockwise by 30 degrees and finding the
+% value there using bilinear interpolation. One could interpret this as
+% basically rotating the entire grid anticlockwise by 30 degrees
+##### SOURCE END #####
+--></body></html>
